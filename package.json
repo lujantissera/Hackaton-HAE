@@ -1,0 +1,21 @@
+{
+  "name": "hackaton-hae",
+  "version": "1.0.0",
+  "description": "Plataforma para preventa de productos basada en blockchain con contratos inteligentes y tokens representativos.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^5.0.0",
+    "hardhat": "^2.22.17"
+  },
+  "dependencies": {
+    "@openzeppelin/contracts": "^5.1.0",
+    "dotenv": "^16.4.7",
+    "ethers": "^6.13.4"
+  }
+}
