@@ -1,0 +1,62 @@
+<<!doctype html>
+    <html lang="en">
+
+    <head>
+        <title>Actualizar Producto</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <!-- Bootstrap CSS v5.2.1 -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+            integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    </head>
+
+    <body>
+        <header id="header">
+            <!-- place navbar here -->
+        </header>
+        <main>
+            <div class="container" id="app">
+                <form style="background-color: aliceblue;margin:10px auto ; width: 400px; padding: 20px;">
+                    <h2>Editar Producto </h2>
+                    <p>Precio:{{precio}}</p>
+                    <div class="mb-3">
+                        <label for="id">Id</label>
+                        <input type="number" name="id" id="id" disabled v-model="id">
+                    </div>
+                    <div class="mb-3">
+                        <label for="nombre">Nombre</label>
+                        <input type="text" name="nombre" id="nombre" v-model="nombre">
+                    </div>
+                    <div class="mb-3">
+                        <label for="precio">Precio</label>
+                        <input type="number" name="precio" id="precio" v-model="precio">
+                    </div>
+                    <div class="mb-3">
+                        <label for="stock">Stock</label>
+                        <input type="number" name="stock" id="stock" v-model="stock">
+                    </div>
+                    <div class="mb-3">
+                        <label for="imagen">Imagen</label>
+                        <input type="text" name="imagen" id="imagen" v-model="imagen">
+                        <img width="100" :src="imagen" alt="">
+                    </div>
+                    <button type="button" class="btn btn-success" v-on:click="modificar()">Grabar</button>
+                </form>
+            </div>
+        </main>
+        <footer>
+            <!-- place footer here -->
+        </footer>
+        <!-- Bootstrap JavaScript Libraries -->
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+            integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
+            crossorigin="anonymous"> </script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js"
+            integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz"
+            crossorigin="anonymous"> </script>
+        <script src="./js/main.js"></script>
+        <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+        <script src="./js/producto-edit.js"></script>
+    </body>
+
+    </html>
