@@ -2,7 +2,6 @@
 // Compatible with OpenZeppelin Contracts ^5.0.0
 pragma solidity >=0.8.0 <0.9.0;
 import "@openzeppelin/contracts/token/ERC1155/IERC1155Receiver.sol";
-import "@openzeppelin/contracts/utils/introspection/ERC165.sol";
 import "@openzeppelin/contracts/token/ERC1155/IERC1155.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
@@ -19,7 +18,7 @@ interface ITokenizarProducto {
     ) external;
 }
 
-contract PresalePlatform is Ownable, IERC1155Receiver{
+contract PresalePlatform is Ownable, ERC165, IERC1155Receiver{
     
     IERC20 public usdt; //USDT token (thether.sol)
     ITokenizarProducto public productContract; //Contrati de productos (tokenizarProducto.sol)
@@ -31,9 +30,10 @@ contract PresalePlatform is Ownable, IERC1155Receiver{
         bytes calldata data) external pure override returns (bytes4) {
         return this.onERC1155Received.selector;
 }
-    function supportsInterface(bytes4 interfaceId) public view override returns (bool) {
+    function supportsInterface(bytes4 interfaceId) public view virtual override returns (bool) {
         return interfaceId == type(IERC1155Receiver).interfaceId || super.supportsInterface(interfaceId);
 }
+
 
     function onERC1155BatchReceived(
         address operator,
