@@ -1,6 +1,14 @@
 # Hackaton-HAE
 Plataforma para preventa de productos basada en blockchain con contratos inteligentes y tokens representativos.
 
-- Archivo thether.sol: Lo usamos para mintear USDT de prueba en la Testnet.
-- TokenizarProducto_V0.2.sol: Mintea un token (producto) a demanda, puede establecerse el nombre, cantidad y valor del mismo.
+- Contrato thether.sol:
+Funcionalidad: Básica, permite ir realizando pruebas.
+Descripción: Mintea USDT para realizar pruebas en la Testnet.
 
+- Contrato TokenizarProducto_V0.2.sol: 
+Funcionalidad: Básica, permite ir realizando pruebas.
+Descripción: Mintea un token (producto) a demanda, puede establecerse el nombre, cantidad y valor del mismo. 
+
+- Contrato exchange.sol:
+Funcionalidad: Ninguna aún, en desarrollo
+Descripción: Debe permitir el intercambio de productos/usdt conforme al precio estipulado.
