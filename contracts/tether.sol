@@ -4,8 +4,13 @@ pragma solidity ^0.8.22;
 
 import {ERC20} from "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 
+<<<<<<< Updated upstream:contracts/thether.sol
 contract Thether is ERC20 {
     constructor() ERC20("Thether", "USDT") {
+=======
+contract Tether is ERC20 {
+    constructor() ERC20("Tether", "USDT") {
+>>>>>>> Stashed changes:contracts/tether.sol
         _mint(msg.sender, 1000000 * 10 ** decimals());
     }
 
