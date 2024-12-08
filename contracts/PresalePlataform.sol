@@ -18,42 +18,50 @@ interface ITokenizarProducto {
     ) external;
 }
 
-contract PresalePlatform is Ownable, ERC165, IERC1155Receiver{
-    
+
+contract PresalePlatform is Ownable, IERC1155Receiver {
     IERC20 public usdt; //USDT token (thether.sol)
     ITokenizarProducto public productContract; //Contrati de productos (tokenizarProducto.sol)
+    event ProductPurchased(
+        address buyer,
+        uint256 tokenId,
+        uint256 quantity,
+        uint256 totalCost
+    );
+
+    constructor(address _usdt, address _productContract) Ownable(msg.sender) {
+        require(
+            _usdt != address(0) && _productContract != address(0),
+            "Direcciones invalidas"
+        );
+        usdt = IERC20(_usdt);
+        productContract = ITokenizarProducto(_productContract);
+    }
+
+    // Implementación de IERC1155Receiver
     function onERC1155Received(
         address operator,
         address from,
         uint256 id,
         uint256 value,
-        bytes calldata data) external pure override returns (bytes4) {
+        bytes calldata data
+    ) external pure override returns (bytes4) {
         return this.onERC1155Received.selector;
-}
-    function supportsInterface(bytes4 interfaceId) public view virtual override returns (bool) {
-        return interfaceId == type(IERC1155Receiver).interfaceId || super.supportsInterface(interfaceId);
-}
-
+    }
 
     function onERC1155BatchReceived(
         address operator,
         address from,
         uint256[] calldata ids,
         uint256[] calldata values,
-        bytes calldata data) external pure override returns (bytes4) {
+        bytes calldata data
+    ) external pure override returns (bytes4) {
         return this.onERC1155BatchReceived.selector;
-}
+    }
 
-    event ProductPurchased(address buyer, uint256 tokenId, uint256 quantity, uint256 totalCost);
-
-    constructor(address _usdt, address _productContract) Ownable(msg.sender) {
-        require(_usdt != address(0) && _productContract != address(0), "Direcciones invalidas");
-        usdt = IERC20(_usdt);
-        productContract = ITokenizarProducto(_productContract);
-          }
     //Compra productos con USDT
-    function buyProducts(uint256 tokenId , uint quantity) external{
-        require(quantity > 0 , "Debe comprar al menos una unidad");
+    function buyProducts(uint256 tokenId, uint quantity) external {
+        require(quantity > 0, "Debe comprar al menos una unidad");
 
         //obtiene el precio en USDT por unidad
         uint256 pricePerUnit = productContract.usdtValue(tokenId);
@@ -63,19 +71,23 @@ contract PresalePlatform is Ownable, ERC165, IERC1155Receiver{
         uint256 totalCost = pricePerUnit * quantity;
 
         // Transferir Usdt del comprador al contrato
-        require(usdt.transferFrom(msg.sender, address(this), totalCost), "Transferencia fallida");
+        require(
+            usdt.transferFrom(msg.sender, address(this), totalCost),
+            "Transferencia fallida"
+        );
 
         //Transferir el producto tokenizado al comprador
-        productContract.safeTransferFrom(address(this), msg.sender, tokenId, quantity, "");
-        emit ProductPurchased(msg.sender, tokenId , quantity, totalCost);
-
-
-        // Retirar USDT acumulado en el cotrato
-
-
+        productContract.safeTransferFrom(
+            address(this),
+            msg.sender,
+            tokenId,
+            quantity,
+            ""
+        );
+        emit ProductPurchased(msg.sender, tokenId, quantity, totalCost);
     }
 
-
+    // Retirar USDT acumulado en el cotrato
 
     function withdrawUSDT() external onlyOwner {
         uint256 balance = usdt.balanceOf(address(this));
@@ -84,5 +96,8 @@ contract PresalePlatform is Ownable, ERC165, IERC1155Receiver{
         usdt.transfer(msg.sender, balance);
     }
 
+    function supportsInterface(
+        bytes4 interfaceId
+    ) external view override returns (bool) {}
 }
     
