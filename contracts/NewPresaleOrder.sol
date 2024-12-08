@@ -30,4 +30,8 @@ contract NewPresaleOrder is ERC1155 {
     function checkEndTime(uint256 _productId) public view returns (uint256) {
         return endTime[_productId];
     }
+
+    function usdtPrice(uint256 _productId) public view returns (uint256) {
+        return priceInUsdt[_productId];
+    }
 }

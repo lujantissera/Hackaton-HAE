@@ -67,6 +67,7 @@ contract PresaleManager is Ownable {
 
         // Transfiere los productos del vendedor al comprador
         products.safeTransferFrom(seller, msg.sender, productId, quantity, "");
+        
         emit BuyAccomplished(msg.sender, seller, productId, quantity, totalCost, commission);
     }
 
