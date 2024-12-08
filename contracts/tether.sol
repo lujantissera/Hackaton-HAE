@@ -1,16 +1,11 @@
 // SPDX-License-Identifier: MIT
 // Compatible with OpenZeppelin Contracts ^5.0.0
-pragma solidity ^0.8.22;
+pragma solidity >=0.8.0 <0.9.0;
 
 import {ERC20} from "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 
-<<<<<<< Updated upstream:contracts/thether.sol
-contract Thether is ERC20 {
-    constructor() ERC20("Thether", "USDT") {
-=======
 contract Tether is ERC20 {
     constructor() ERC20("Tether", "USDT") {
->>>>>>> Stashed changes:contracts/tether.sol
         _mint(msg.sender, 1000000 * 10 ** decimals());
     }
 
@@ -20,6 +15,6 @@ contract Tether is ERC20 {
 
     // Override de la función decimals para establecer 6 decimales
     function decimals() public view virtual override returns (uint8) { 
-        return 6;
-         }
+    return 6;
+    }
 }

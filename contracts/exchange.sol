@@ -9,35 +9,25 @@ interface ITokenizarProducto is IERC1155 {
     function usdtValue(uint256 tokenId) external view returns (uint256);
 }
 
-contract Exchange is Ownable (msg.sender) {
-    IERC20 public USDT;
+contract Exchange is Ownable {
+    IERC20 public usdt;
     ITokenizarProducto public products;
 
-    event TokensSwapped(
-        address indexed buyer,
-        address indexed seller,
-        uint256 tokenId,
-        uint256 quantity,
-        uint256 usdtAmount
-    );
+    event TokensSwapped(address indexed buyer, address indexed seller, uint256 tokenId, uint256 quantity, uint256 usdtAmount);
 
-    constructor(address _USDT, address _products)  {
+    constructor(address _USDT, address _products) Ownable (msg.sender)  {
         require(_USDT != address(0) && _products != address(0), "Invalid addresses");
-        USDT = IERC20(_USDT);
+        usdt = IERC20(_USDT);
         products = ITokenizarProducto(_products);
     }
-
+  
     /**
      * @notice Realiza un intercambio de tokens ERC-1155 por USDT.
      * @param seller Dirección del propietario del token ERC-1155.
      * @param tokenId ID del token a comprar.
      * @param quantity Cantidad del token a comprar.
      */
-    function swapToken(
-        address seller,
-        uint256 tokenId,
-        uint256 quantity
-    ) external {
+    function swapToken(address seller, uint256 tokenId, uint256 quantity) external {
         require(seller != address(0), "Invalid seller address");
         require(quantity > 0, "Quantity must be greater than 0");
 
@@ -48,14 +38,14 @@ contract Exchange is Ownable (msg.sender) {
         uint256 totalCost = pricePerToken * quantity;
 
         // Verifica que el comprador tenga suficiente USDT
-        require(USDT.balanceOf(msg.sender) >= totalCost, "Insufficient USDT balance");
+        require(usdt.balanceOf(msg.sender) >= totalCost, "Insufficient USDT balance");
 
         // Verifica que el vendedor tenga suficientes tokens ERC-1155
         require(products.balanceOf(seller, tokenId) >= quantity, "Seller has insufficient tokens");
 
         // Transfiere USDT del comprador al vendedor
-        require(USDT.transferFrom(msg.sender, seller, totalCost), "USDT transfer failed");
-
+        require(usdt.transferFrom(msg.sender, seller, totalCost), "USDT transfer failed");
+        
         // Transfiere los tokens ERC-1155 del vendedor al comprador
         products.safeTransferFrom(seller, msg.sender, tokenId, quantity, "");
 
