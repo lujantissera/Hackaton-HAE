@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -6,6 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FinanWork - Marketplace</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .card-img-top {
+            height: 200px;
+            object-fit: cover;
+        }
+    </style>
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
@@ -27,6 +32,9 @@
     </nav>
     <div class="container mt-5">
         <h2 class="text-center mb-4">Marketplace</h2>
+        <div class="text-center mb-4">
+            <button id="connect-metamask" class="btn btn-primary">Conectar MetaMask</button>
+        </div>
         <div class="row">
             <div class="col-md-4">
                 <div class="card">
@@ -34,42 +42,7 @@
                     <div class="card-body text-center">
                         <h5 class="card-title">Mermelada de Frutilla</h5>
                         <p class="card-text">Precio: $100</p>
-                        <button id="connect-button2">Conectar MetaMask</button>
-                        <button id="buyButton1" class="btn btn-primary">Comprar</button>
-                        <script>
-                            document.getElementById('connect-button2').addEventListener('click', async (event) => {
-                              let account;
-                              let button = event.target;
-                          
-                              try {
-                                // Solicitar acceso a MetaMask y obtener la cuenta
-                                const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
-                                account = accounts[0];
-                                console.log('Cuenta conectada:', account);
-                                button.textContent = `Conectado: ${account}`;
-                          
-                                // Mostrar balance de la cuenta
-                                const balanceResult = await ethereum.request({
-                                  method: 'eth_getBalance',
-                                  params: [account, 'latest'],
-                                });
-                                const wei = parseInt(balanceResult, 16);
-                                const balance = wei / 10 ** 18;
-                                console.log(balance + ' ETH');
-                          
-                                // Abrir la billetera MetaMask
-                                await ethereum.request({
-                                  method: 'wallet_requestPermissions',
-                                  params: [{ eth_accounts: {} }],
-                                });
-                                console.log('Billetera abierta');
-                              } catch (error) {
-                                console.error('Error:', error);
-                                alert('Error al conectar con MetaMask o abrir la billetera.');
-                              }
-                            });
-                          </script>
-                        
+                        <button class="btn btn-secondary buy-button" data-product="Mermelada de Frutilla">Comprar</button>
                     </div>
                 </div>
             </div>
@@ -79,43 +52,7 @@
                     <div class="card-body text-center">
                         <h5 class="card-title">Mermelada de Durazno</h5>
                         <p class="card-text">Precio: $200</p>
-                        <button id="connect-button21">Comprar</button>
-                        <button id="connect-button">Conecta cartera Metamask</button>
-                        <script>
-                            document.getElementById('connect-button').addEventListener('click', async (event) => {
-                              let account;
-                              let button = event.target;
-                          
-                              try {
-                                // Solicitar acceso a MetaMask y obtener la cuenta
-                                const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
-                                account = accounts[0];
-                                console.log('Cuenta conectada:', account);
-                                button.textContent = `Conectado: ${account}`;
-                          
-                                // Mostrar balance de la cuenta
-                                const balanceResult = await ethereum.request({
-                                  method: 'eth_getBalance',
-                                  params: [account, 'latest'],
-                                });
-                                const wei = parseInt(balanceResult, 16);
-                                const balance = wei / 10 ** 18;
-                                console.log(balance + ' ETH');
-                          
-                                // Abrir la billetera MetaMask
-                                await ethereum.request({
-                                  method: 'wallet_requestPermissions',
-                                  params: [{ eth_accounts: {} }],
-                                });
-                                console.log('Billetera abierta');
-                              } catch (error) {
-                                console.error('Error:', error);
-                                alert('Error al conectar con MetaMask o abrir la billetera.');
-                              }
-                            });
-                          </script>
-                        
-                        <div id="status"></div>
+                        <button class="btn btn-secondary buy-button" data-product="Mermelada de Durazno">Comprar</button>
                     </div>
                 </div>
             </div>
@@ -124,7 +61,37 @@
     <footer class="bg-primary text-white text-center py-3 mt-5">
         <p>FinanWork © 2024. Todos los derechos reservados.</p>
     </footer>
+
+    <!-- Modal -->
+    <div class="modal fade" id="buyModal" tabindex="-1" aria-labelledby="buyModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="buyModalLabel">Confirmar compra</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="buyForm">
+                        <div class="mb-3">
+                            <label for="productName" class="form-label">Producto</label>
+                            <input type="text" class="form-control" id="productName" readonly>
+                        </div>
+                        <div class="mb-3">
+                            <label for="quantity" class="form-label">Cantidad</label>
+                            <input type="number" class="form-control" id="quantity" placeholder="Ingresa la cantidad" required>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" id="confirmPurchase" class="btn btn-primary">Confirmar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="../scripts/script.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/ethers/dist/ethers.min.js"></script>
+    <script src="scripts/script.js" defer></script>
 </body>
 </html>

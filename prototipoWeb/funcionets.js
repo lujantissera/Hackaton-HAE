@@ -1,4 +1,4 @@
-// Initialise the page objects to interact with
+
 const ethereumButton = document.querySelector('.enableEthereumButton');
 const showAccount = document.querySelector('.showAccount');
 const showChainId = document.querySelector('.showChainId');
