@@ -1,60 +1,42 @@
-
+/* General body styling */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f9f9f9;
+    background: linear-gradient(135deg, #f3f4f6, #e8effc);
+    color: #333;
 }
-header {
-    background: linear-gradient(90deg, #007ACC, #005BAA);
-    color: white;
-    padding: 20px 0;
-    text-align: center;
-}
+
+/* Navbar */
 .navbar {
-    text-align: center;
-    margin-top: 10px;
+    background: #005BAA;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 .navbar a {
-    margin: 0 15px;
     color: white;
+    font-weight: bold;
     text-decoration: none;
-    font-weight: bold;
 }
+.navbar a:hover {
+    text-decoration: underline;
+}
+
+/* Hero Section */
 .hero-section {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 50px;
-    background-color: #f3f4f6;
-}
-button {
-    border: solid 2px #444;
-    font-size:20px;
-    padding: 20px 40px 20px 70px;
-    background: #dd6e2e;
-    background-image: url("https://www.blockchaingamealliance.org/wp-content/uploads/elementor/thumbs/metamask-logo-orx9lav248wszs9dxqi98z8cykpg62tdih9h8gjzpi.png");
-    background-size: 40px;
-    background-repeat: no-repeat;
-    background-position: 20px;
-    font-weight: bold;
-    color: #fff;
-    box-shadow: inset 2px 2px 0 #fff, 0 8px 10px -4px rgba(0,0,0,0.4);
-    cursor: pointer;
-    transition: all 0.4s ease;
-  }
-.product-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 20px;
-}
-.product-card {
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    padding: 20px;
+    background: url('https://example.com/hero-background.jpg') no-repeat center center/cover;
+    color: white;
     text-align: center;
+    padding: 80px 20px;
 }
+.hero-section h1 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+}
+.hero-section p {
+    font-size: 1.2rem;
+}
+
+/* Buttons */
 button {
     background-color: #007ACC;
     color: white;
@@ -62,13 +44,59 @@ button {
     padding: 10px 20px;
     border-radius: 5px;
     cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 button:hover {
     background-color: #005BAA;
 }
-.dashboard-container {
+
+/* Tables */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+table th, table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+}
+table th {
+    background-color: #007ACC;
+    color: white;
+}
+
+/* Cards */
+.card {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
+}
+.card img {
+    height: 200px;
+    object-fit: cover;
+}
+.card-body {
+    padding: 15px;
+}
+
+/* Footer */
+footer {
+    background: #005BAA;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+}
+
+/* Additional reusable styles */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
     padding: 20px;
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+.text-center {
+    text-align: center;
+}
+.mb-4 {
+    margin-bottom: 1.5rem;
 }
