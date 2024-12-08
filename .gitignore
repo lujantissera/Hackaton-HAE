@@ -15,3 +15,11 @@ node_modules
 
 # Hardhat Ignition default folder for deployments against a local node
 ignition/deployments/chain-31337
+yarn.lock
+scaffold/FinanWork/
+package.json
+.yarn/install-state.gz
+.pnp.cjs
+.gitattributes
+.editorconfig
+package.json
