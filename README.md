@@ -1,5 +1,6 @@
 # Hackaton-HAE
 
+
 # FinanWork
 
 Plataforma de preventa de productos utilizando blockchain. Permite tokenizar productos y venderlos a través de contratos inteligentes. Los compradores adquieren tokens representativos y al momento de la entrega, estos se devuelven al productor. El sistema incluye contratos inteligentes diseñados para manejar preventa, compra y el intercambio de tokens de forma descentralizada.
@@ -29,7 +30,13 @@ https://www.loom.com/share/4c019198d9374076a1cb783d32b79d09?sid=6671ccc4-cc5a-48
 Dependencias: Ether.js, Metamask, Bootstrap
 Estructura de archivos: MarketPlace.html, script.js
 
+# Flujo:
+https://github.com/lujantissera/Hackaton-HAE/blob/main/interaccion_cliente.jpeg?raw=true
+https://github.com/lujantissera/Hackaton-HAE/blob/main/interaccion_vendedor.jpeg?raw=true
+https://github.com/lujantissera/Hackaton-HAE/blob/main/proceso_final.jpeg?raw=true
 
+# Logo:
+https://github.com/lujantissera/Hackaton-HAE/blob/main/Gemini_Generated_Image_vol2gkvol2gkvol2.png?raw=true
 
 # Despliegues:
 * Implementación en la red de Arbitrum Sepolia con verificación pública del contrato.
