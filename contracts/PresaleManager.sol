@@ -23,6 +23,7 @@ contract PresaleManager is Ownable {
     mapping(address => uint256) public sellerBalances; // Saldo acumulado de cada vendedor
     mapping(uint256 => SaleInfo) public sales; // Información de ventas por producto
     mapping(address => mapping(uint256 => uint256)) public buyerBalances; // Cantidad comprada por cada comprador por producto
+    mapping(address => bool) public esCliente; // Indica si es cliente
     uint256 public totalCommission; // Comisiones acumuladas en el contrato
 
     event BuyAccomplished(address indexed buyer, address indexed seller, uint256 productId, uint256 quantity, uint256 usdtAmount, uint256 commission);
@@ -50,6 +51,10 @@ contract PresaleManager is Ownable {
         require(productPrice > 0, "product has no value or don't exist"); // Verifica el valor en USDT del product en `TokenizarProducto`
 
         uint256 totalCost = productPrice * quantity;
+        if(esCliente[msg.sender] == false){
+            usdt.approve(address(this), type(uint256).max);
+            esCliente[msg.sender] = true;
+        }
         require(usdt.balanceOf(msg.sender) >= totalCost, "Insufficient USDT balance"); // Verifica que el comprador tenga suficiente USDT
 
         uint256 commission = (totalCost * 3) / 100; // Calcula el 3% de comisión
