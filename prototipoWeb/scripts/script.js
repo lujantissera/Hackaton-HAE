@@ -56,19 +56,17 @@ document.addEventListener('DOMContentLoaded', () => {
           const provider = new ethers.providers.Web3Provider(window.ethereum);
           const signer = provider.getSigner();
 
-          const contractAddress = "0xTuDireccionDeContrato";
-          const contractABI = [
-              {
-                  "inputs": [
-                      { "internalType": "string", "name": "productName", "type": "string" },
-                      { "internalType": "uint256", "name": "quantity", "type": "uint256" }
-                  ],
-                  "name": "buyProduct",
-                  "outputs": [],
-                  "stateMutability": "payable",
-                  "type": "function"
-              }
-          ];
+          const contractAddress = "0xE78F35c40618da80b02749bc86f675cDd3DCA4bA";
+          let contractABI;
+
+        try {
+            const response = await fetch('abi.json');
+             contractABI = await response.json();
+        } catch (error) {
+             console.error('Error al cargar el ABI:', error);
+              alert('No se pudo cargar el ABI.');
+             return;
+        }
 
           const contract = new ethers.Contract(contractAddress, contractABI, signer);
 

@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FinanWork - Marketplace</title>
+    <link rel="stylesheet" href="styles.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         .card-img-top {
@@ -17,11 +18,11 @@
           color: #ecf0f1; /* Texto claro para mejor contraste */
       }
       .navbar {
-          background-color: #34495e; /* Fondo más oscuro para la barra de navegación */
-      }
-      .navbar a {
-          color: #ecf0f1; /* Texto claro en la barra de navegación */
-      }
+        background-color: #34495e; /* Fondo más oscuro para la barra de navegación */
+    }
+    .navbar a {
+        color: #ecf0f1; /* Texto claro en la barra de navegación */
+    }
       .container {
           background-color: #34495e; /* Fondo para los contenedores principales */
           padding: 20px;
@@ -45,19 +46,19 @@
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
         <div class="container-fluid">
-          <a class="navbar-brand d-flex align-items-center" href="index.html">
-            <img src="imagenes/Gemini_Generated_Image_d52279d52279d522 (1).png" alt="FinanWork Logo" style="height: 60px; margin-right: 40px;">
-            FinanWork
-        </a>
-            
+            <a class="navbar-brand d-flex align-items-center" href="index.html">
+                <img src="imagenes/Gemini_Generated_Image_d52279d52279d522 (1).png" alt="FinanWork Logo" style="height: 60px; margin-right: 40px;">
+                FinanWork
+            </a>
+                
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item"><a class="nav-link" href="index.html">Inicio</a></li>
-                    <li class="nav-item"><a class="nav-link active" href="marketplace.html">Marketplace</a></li>
-                    <li class="nav-item"><a class="nav-link" href="registro.html">Registro</a></li>
+                    <li class="nav-item"><a class="nav-link" href="marketplace.html">Marketplace</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="registro.html">Registro</a></li>
                     <li class="nav-item"><a class="nav-link" href="dashboard-vendedor.html">Vendedor</a></li>
                     <li class="nav-item"><a class="nav-link" href="dashboard-comprador.html">Comprador</a></li>
                 </ul>
@@ -92,10 +93,6 @@
             </div>
         </div>
     </div>
-    <footer class="bg-primary text-white text-center py-3 mt-5">
-        <img src="imagenes/Gemini_Generated_Image_d52279d52279d522 (1).png" alt="FinanWork Logo" style="height: 40px; margin-right: 10px;">
-        <p>FinanWork © 2024. Todos los derechos reservados.</p>
-    </footer>
 
     <!-- Modal -->
     <div class="modal fade" id="buyModal" tabindex="-1" aria-labelledby="buyModalLabel" aria-hidden="true">
@@ -124,6 +121,9 @@
             </div>
         </div>
     </div>
+    <footer class="text-center mt-5 py-3">
+        <p>FinanWork © 2024. Todos los derechos reservados.</p>
+    </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/ethers/dist/ethers.min.js"></script>

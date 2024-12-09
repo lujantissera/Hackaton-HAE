@@ -1,37 +1,54 @@
 // SPDX-License-Identifier: MIT
-// Compatible with OpenZeppelin Contracts ^5.0.0
-pragma solidity ^0.8.22;
-
-/*
- * @title Exchange
- * @author L4F Team
- * @notice Hackaton HAE project (ETHKIPU-EDUCATETH)   
- * Considerations about this contract: Implement a exchange contract that swap product tokens / usdt tokens:
- */
+pragma solidity >=0.8.0 <0.9.0;
 
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/token/ERC1155/IERC1155.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
+interface ITokenizarProducto is IERC1155 {
+    function usdtValue(uint256 tokenId) external view returns (uint256);
+}
 
-contract exchange is Ownable {
-    IERC20 public USDT;
-    IERC1155 public products;
+contract Exchange is Ownable {
+    IERC20 public usdt;
+    ITokenizarProducto public products;
 
-    uint256 public reserveA;
-    uint256 public reserveB;
+    event TokensSwapped(address indexed buyer, address indexed seller, uint256 tokenId, uint256 quantity, uint256 usdtAmount);
 
-    event TokensSwapped(address indexed swapper, address tokenIn, uint256 amountIn, address tokenOut, uint256 amountOut);
-
-    constructor(address _USDT, address _products)
-        Ownable(msg.sender)
-    {
-        require(_USDT != address(0) && _products != address(0), "Invalid token addresses");
-        require(_USDT != _products, "Tokens must be different");
-        USDT = IERC20(_USDT);
-        products = IERC1155(_products); 
+    constructor(address _USDT, address _products) Ownable (msg.sender)  {
+        require(_USDT != address(0) && _products != address(0), "Invalid addresses");
+        usdt = IERC20(_USDT);
+        products = ITokenizarProducto(_products);
     }
-
   
+    /**
+     * @notice Realiza un intercambio de tokens ERC-1155 por USDT.
+     * @param seller Dirección del propietario del token ERC-1155.
+     * @param tokenId ID del token a comprar.
+     * @param quantity Cantidad del token a comprar.
+     */
+    function swapToken(address seller, uint256 tokenId, uint256 quantity) external {
+        require(seller != address(0), "Invalid seller address");
+        require(quantity > 0, "Quantity must be greater than 0");
 
+        // Verifica el valor en USDT del token en `TokenizarProducto`
+        uint256 pricePerToken = products.usdtValue(tokenId);
+        require(pricePerToken > 0, "Token has no value set");
+
+        uint256 totalCost = pricePerToken * quantity;
+
+        // Verifica que el comprador tenga suficiente USDT
+        require(usdt.balanceOf(msg.sender) >= totalCost, "Insufficient USDT balance");
+
+        // Verifica que el vendedor tenga suficientes tokens ERC-1155
+        require(products.balanceOf(seller, tokenId) >= quantity, "Seller has insufficient tokens");
+
+        // Transfiere USDT del comprador al vendedor
+        require(usdt.transferFrom(msg.sender, seller, totalCost), "USDT transfer failed");
+        
+        // Transfiere los tokens ERC-1155 del vendedor al comprador
+        products.safeTransferFrom(seller, msg.sender, tokenId, quantity, "");
+
+        emit TokensSwapped(msg.sender, seller, tokenId, quantity, totalCost);
+    }
 }
